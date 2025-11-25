@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36221.1 d17.14
+VisualStudioVersion = 17.14.36221.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseSystem", "WarehouseSystem.csproj", "{81B95EA0-95C6-4687-82A5-BE79F9716351}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseSystem.Tests", "..\WarehouseSystem.Tests\WarehouseSystem.Tests.csproj", "{8EC79804-B892-4DA2-AEDE-AF56494D4308}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{81B95EA0-95C6-4687-82A5-BE79F9716351}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81B95EA0-95C6-4687-82A5-BE79F9716351}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81B95EA0-95C6-4687-82A5-BE79F9716351}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EC79804-B892-4DA2-AEDE-AF56494D4308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EC79804-B892-4DA2-AEDE-AF56494D4308}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EC79804-B892-4DA2-AEDE-AF56494D4308}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EC79804-B892-4DA2-AEDE-AF56494D4308}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

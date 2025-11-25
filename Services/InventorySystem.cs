@@ -48,7 +48,9 @@ namespace WarehouseSystem.Services
 
         public void UpdateQuantity(string name, double newQuantity)
         {
-            var product = _products.FirstOrDefault(p => p.Name == name)
+
+            var product = _products.FirstOrDefault(p =>
+    p.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                 ?? throw new ArgumentException("Product not found.");
 
             if (newQuantity < 0)
