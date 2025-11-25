@@ -1,0 +1,59 @@
+using NUnit.Framework;
+using WarehouseSystem.Models;
+using WarehouseSystem.Services;
+
+namespace WarehouseSystem.Tests
+{
+    [TestFixture]
+    public class InventoryTests
+    {
+        private InventorySystem service;
+        private string testFile = "inventory.json";
+
+        [SetUp]
+        public void Setup()
+        {
+            if (File.Exists(testFile))
+                File.Delete(testFile);
+
+            service = new InventorySystem();
+        }
+        //TOTAL QUANTITY
+        [Test]
+        public void TotalQuantity_ShouldReturnCorrectSum()
+        {
+            //Arrange
+            service.AddProduct("Bread", 1.20, 10, "M", "D");
+            service.AddProduct("Milk", 2.20, 5, "M", "D");
+            //Act
+            double total = service.TotalQuantity();
+            //Assert
+            Assert.That(total, Is.EqualTo(15));
+        }
+        //AVERAGE PRICE
+        [Test]
+        public void AveragePrice_ShouldReturnCorrectValue()
+        {
+            //Arrange
+            service.AddProduct("P1", 10, 1, "M", "D");
+            service.AddProduct("P2", 20, 1, "M", "D");
+            //Act
+            double avg = service.AveragePrice();
+            //Assert
+            Assert.That(avg, Is.EqualTo(15));
+        }
+        //MOST EXPENSIVE
+        [Test]
+        public void MostExpensive_ShouldReturnCorrectProduct()
+        {
+            //Arrange
+            service.AddProduct("Cheap", 1, 10, "M", "D");
+            service.AddProduct("Expensive", 10, 10, "M", "D");
+            //Act
+            Product p = service.MostExpensive();
+            //Assert
+            Assert.That(p.Name, Is.EqualTo("Expensive"));
+        }
+
+    }
+}
