@@ -18,6 +18,7 @@ namespace WarehouseSystem.Tests
 
             service = new InventorySystem();
         }
+
         //TOTAL QUANTITY
         [Test]
         public void TotalQuantity_ShouldReturnCorrectSum()
@@ -30,6 +31,7 @@ namespace WarehouseSystem.Tests
             //Assert
             Assert.That(total, Is.EqualTo(15));
         }
+
         //AVERAGE PRICE
         [Test]
         public void AveragePrice_ShouldReturnCorrectValue()
@@ -42,6 +44,7 @@ namespace WarehouseSystem.Tests
             //Assert
             Assert.That(avg, Is.EqualTo(15));
         }
+
         //MOST EXPENSIVE
         [Test]
         public void MostExpensive_ShouldReturnCorrectProduct()
@@ -55,5 +58,40 @@ namespace WarehouseSystem.Tests
             Assert.That(p.Name, Is.EqualTo("Expensive"));
         }
 
+        [Test]
+        public void AddProduct_ValidData_ShouldAdd()
+        {
+            // Act
+            service.AddProduct("Bread", 1.20, 10, "BakerCo", "Distrib");
+
+            // Assert
+            Assert.That(service.GetAll().Count, Is.EqualTo(1));
+            Assert.That(service.GetAll()[0].Name, Is.EqualTo("Bread"));
+        }
+
+        [Test]
+        public void AddProduct_InvalidData_ShouldThrow()
+        {
+            Assert.Throws<ArgumentException>(() => service.AddProduct("Tea", 0, 12, "M", "D"));
+            Assert.Throws<ArgumentException>(() => service.AddProduct("T", 2, 1, "M", "D"));
+            Assert.Throws<ArgumentException>(() => service.AddProduct("Tea", 4, -12, "M", "D"));
+            Assert.Throws<ArgumentException>(() => service.AddProduct("Tea", 3, 12, "", "D"));
+            Assert.Throws<ArgumentException>(() => service.AddProduct("Tea", 3, 12, "M", ""));
+        }
+
+        [Test]
+        public void UpdateQuantity_Valid_ShouldUpdate()
+        {
+            service.AddProduct("Water", 1.0, 20, "Prod", "Dist");
+
+            // Act
+            service.UpdateQuantity("Water", 50);
+
+            var list = service.GetAll();
+            Assert.That(list[0].Quantity, Is.EqualTo(50));
+
+            // Assert
+            Assert.That(service.GetAll()[0].Quantity, Is.EqualTo(50));
+        }
     }
 }
