@@ -13,8 +13,10 @@ namespace WarehouseSystem.Tests
         [SetUp]
         public void Setup()
         {
+           
             if (File.Exists(testFile))
                 File.Delete(testFile);
+
 
             service = new InventorySystem();
         }
@@ -44,6 +46,13 @@ namespace WarehouseSystem.Tests
             //Assert
             Assert.That(avg, Is.EqualTo(15));
         }
+        [Test]
+        public void AveragePrice_NoProducts_ShouldThrow()
+        {
+            Assert.Throws<InvalidOperationException>(() => service.AveragePrice());
+
+
+        }
 
         //MOST EXPENSIVE
         [Test]
@@ -58,6 +67,34 @@ namespace WarehouseSystem.Tests
             Assert.That(p.Name, Is.EqualTo("Expensive"));
         }
 
+
+        [Test]
+        public void MostExpensive_NoProducts_ShouldThrow()
+        {
+            Assert.Throws<InvalidOperationException>(() => service.MostExpensive());
+
+        }
+
+        // CHEAPEST
+        [Test]
+        public void Cheapest_ShouldReturnCorrectProduct()
+        {
+            service.AddProduct("Cheap", 1, 10, "M", "D");
+            service.AddProduct("Expensive", 10, 10, "M", "D");
+
+            Product p = service.Cheapest();
+
+            Assert.That(p.Name, Is.EqualTo("Cheap"));
+        }
+
+        [Test]
+        public void Cheapest_NoProducts_ShouldThrow()
+        {
+            Assert.Throws<InvalidOperationException>(() => service.Cheapest());
+
+        }
+
+        //AddProduct
         [Test]
         public void AddProduct_ValidData_ShouldAdd()
         {
@@ -79,6 +116,7 @@ namespace WarehouseSystem.Tests
             Assert.Throws<ArgumentException>(() => service.AddProduct("Tea", 3, 12, "M", ""));
         }
 
+        //UpdateQuantity
         [Test]
         public void UpdateQuantity_Valid_ShouldUpdate()
         {
@@ -92,6 +130,50 @@ namespace WarehouseSystem.Tests
 
             // Assert
             Assert.That(service.GetAll()[0].Quantity, Is.EqualTo(50));
+        }
+
+        [Test]
+        public void UpdateQuantity_NegativeProductNotFound_ShouldThrow()
+        {
+            service.AddProduct("Fish", 24.6, 10, "M", "D");
+
+            Assert.Throws<ArgumentException>(() => service.UpdateQuantity("Fish", -5));
+
+
+        }
+
+        [Test]
+        public void UpdateQuantity_ProductNotFound_ShouldThrow()
+        {
+            Assert.Throws<ArgumentException>(() => service.UpdateQuantity("NonExisting", 10));
+
+        }
+
+        //IsAvailable
+        [Test]
+        public void IsAvailable_WhenQuantityPositive_ShouldBeTrue()
+        {
+            service.AddProduct("Juice", 2.00, 5, "M", "D");
+
+            bool result = service.IsAvailable("Juice");
+
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        public void IsAvailable_WhenZero_ShouldBeFalse()
+        {
+            service.AddProduct("Coffee", 3.50, 0, "M", "D");
+
+            bool result = service.IsAvailable("Coffee");
+
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public void IsAvailable_ProductNotFound_ShouldThrow()
+        {
+            Assert.Throws<ArgumentException>(() => service.IsAvailable("Ghost"));
         }
     }
 }
